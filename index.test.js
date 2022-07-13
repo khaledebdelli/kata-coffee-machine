@@ -1,32 +1,9 @@
-const { drinkMaker, payMoney } = require("./index");
-const commands = require("./commands");
-const prices = require("./prices");
+const { drinkMaker } = require("./index");
+const data = require("./data");
 
 describe('Turn order into string instructions', () => {
-
-    test('should return correct for hot coffee with 2 sugars', () => {
-        const instructions = payMoney(commands.COFFEE, 0.7, 2, true);
-        expect(instructions).toBe('Ch:2:0');
+    test('should return correct total and numbers of each drink', () => {
+        const instructions = drinkMaker(data);
+        expect(instructions).toBe('3 coffee and 1 tea and 2 chocolate and 2 orange with a total of 4.4');
     });
-
-    test('should return correct for ORANGE', () => {
-        const instructions = payMoney(commands.ORANGE, 0.7);
-        expect(instructions).toBe('O::');
-    });
-
-    test('should return money missing for ORANGE', () => {
-        const instructions = payMoney(commands.ORANGE, 0.5);
-        expect(instructions).toBe(prices.ORANGE_PRICE - 0.5 + 'money missing');
-    });
-
-    test('should return correct for hot chocolate with one sugar', () => {
-        const instructions = payMoney(commands.CHOCOLATE, 0.7, 1, true);
-        expect(instructions).toBe('Hh:1:0');
-    });
-
-    test('should return correct for hot tea with no sugar', () => {
-        const instructions = payMoney(commands.TEA, 0.7, 0, true);
-        expect(instructions).toBe('Th::');
-    });
-
 });
